@@ -1,14 +1,18 @@
 services:
   backend:
+    container_name: backend
     image: my-backend
     build:
       context: backend
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    container_name: backend
     networks:
       - app_network
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    depends_on:
+      - postgres_db
 
   nginx:
     image: nginx:latest
@@ -16,8 +20,10 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt
     depends_on:
       - backend
       - frontend
@@ -34,7 +40,29 @@ services:
       - "4200:80"
     networks:
       - app_network
+  postgres_db:
+    image: postgres:17.4
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} 
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app_network
+    restart: always
 
 networks:
   app_network:
     driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./data/postgres/
+      o: bind

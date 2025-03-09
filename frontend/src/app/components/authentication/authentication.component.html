@@ -1,0 +1,23 @@
+<div class="auth-container">
+  <form #authForm="ngForm">
+    <label for="username">Username</label>
+    <input type="text" id="username" [(ngModel)]="username" name="username" required />
+
+    <label for="password">Password</label>
+    <input type="password" id="password" [(ngModel)]="password" name="password" required />
+
+    <div class="button-group">
+      <button type="button" (click)="register()">Register</button>
+      <button type="button" (click)="login()">Login</button>
+    </div>
+  </form>
+
+  <p *ngIf="message">{{ message }}</p>
+</div>
+<div class="about-container">
+  <div class="button-group">
+    <button type="button" (click)="getAbout()">Get About</button>
+  </div>
+
+  <p *ngIf="about_info">{{ about_info }}</p>
+</div>

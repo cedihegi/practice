@@ -3,12 +3,26 @@ name = "backend"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+name = "backend"
+path = "src/lib.rs"
+
 [[bin]]
 name = "backend"
 path = "src/main.rs"
 
 
 [dependencies]
+actix-cors = "0.7.0"
 actix-web = "4.0"  # Web framework
+argon2 = "0.5.3"
+chrono = "0.4.40"
+dotenv = "0.15.0"
+env_logger = "0.11.6"
+jsonwebtoken = "9.3.1"
+log = "0.4.26"
+rand = "0.9.0"
 serde = { version = "1.0", features = ["derive"] }  # Serialization/deserialization
 serde_json = "1.0"  # JSON support
+sqlx = { version = "0.8.3", features = ["postgres", "runtime-tokio-native-tls"]} # sql postgres
+thiserror = "2.0.11"
