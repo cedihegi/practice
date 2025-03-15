@@ -1,0 +1,15 @@
+<div id="header-container">
+    <div id="header">
+        <div id="header-left"></div>
+        <div>
+            <h1>what a rusty blog</h1>
+        </div>
+        <div id="header-right">
+            @if (!(authState$ | async)?.logged_in; as authState) {
+            <a routerLink="/login">login</a>
+            } @else {
+            <a routerLink="/profile">Profile</a> | <a (click)="logout()">logout</a>
+            }
+        </div>
+    </div>
+</div>

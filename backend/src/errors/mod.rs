@@ -8,7 +8,7 @@ pub enum AppError {
     #[error("Unauthorized: {0}")]
     Unauthorized(String),
     #[error("Internal server error")]
-    InternalServerError,
+    InternalServerError(String),
 }
 
 impl ResponseError for AppError {
@@ -18,9 +18,7 @@ impl ResponseError for AppError {
                 HttpResponse::InternalServerError().json("Database error")
             }
             AppError::Unauthorized(msg) => HttpResponse::Unauthorized().json(msg),
-            AppError::InternalServerError => {
-                HttpResponse::InternalServerError().json("Internal server error")
-            }
+            AppError::InternalServerError(msg) => HttpResponse::InternalServerError().json(msg),
         }
     }
 }

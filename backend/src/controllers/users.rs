@@ -3,8 +3,8 @@ use crate::models::authentication::AuthenticationClaims;
 use crate::repositories::UserRepository;
 use crate::services::auth::UserService;
 use crate::{errors::AppError, models::api::authentication::RegisterUser};
-use actix_web::get;
 use actix_web::{cookie::Cookie, web, HttpResponse, Responder};
+use actix_web::{get, post};
 use sqlx::PgPool;
 
 pub async fn register_user(
@@ -27,6 +27,16 @@ pub async fn login_user(
         .path("/")
         .finish();
     Ok(HttpResponse::Ok().cookie(cookie).finish())
+}
+
+#[post("/logout")]
+pub async fn logout_user() -> Result<impl Responder, AppError> {
+    let cookie_reset = Cookie::build("auth_token", "")
+        .http_only(true)
+        .same_site(actix_web::cookie::SameSite::Lax)
+        .path("/")
+        .finish();
+    Ok(HttpResponse::Ok().cookie(cookie_reset).finish())
 }
 
 #[get("/current-user")]

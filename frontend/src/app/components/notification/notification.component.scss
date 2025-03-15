@@ -1,0 +1,52 @@
+.notification-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  padding: 20px;
+  margin: 3px;
+}
+
+.notification {
+  padding: 15px 20px;
+  margin: 3px;
+  border-radius: 8px;
+  background-color: #303030;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Colored borders based on notification type */
+.notification.warning {
+  border-color: #28a745; /* Green for success */
+}
+
+.notification.error {
+  border-color: #dc3545; /* Red for error */
+}
+
+.notification.info {
+  border-left-color: #17a2b8; /* Blue for info */
+}
+
+/* Animation for sliding in */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Optional: Animation for sliding out */
+.notification.removing {
+  animation: slideOut 0.3s ease-in;
+}

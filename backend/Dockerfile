@@ -25,4 +25,5 @@ RUN apt-get update && apt-get install -y \
 
 COPY --from=build /app/target/release/backend /usr/local/bin/backend
 EXPOSE 8080
+WORKDIR /app
 CMD ["backend"]

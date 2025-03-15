@@ -1,0 +1,26 @@
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0px;
+  margin: 0px 10px 10px 10px;
+  border-bottom: 1px solid #a0a0a0;
+}
+
+#header-container {
+  margin: 0px;
+  padding: 1px
+}
+
+#header-left {
+  width: 20%;
+}
+#header-right {
+  text-align: right;
+  width: 20%;
+}
+
+h1 {
+  padding: 0;
+  margin: 0;
+}

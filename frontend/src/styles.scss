@@ -1,1 +1,62 @@
 /* You can add global styles to this file, and also import other style files */
+body, html {
+  font-family: 'Courier New', monospace;
+  background-color: #121212;  /* Dark gray background */
+  color: #E0E0E0;             /* Light gray text color */
+  margin: 0;
+  padding: 0;
+  // avoid margin collapse
+  top: 0;
+  height: 100%;
+}
+
+input, label, button {
+  font-family: 'Courier New', monospace;
+  background-color: #121212;  /* Dark gray background */
+  color: #E0E0E0;             /* Light gray text color */
+}
+
+a {
+  color: #8AB4F8;             /* Soft blue for links */
+}
+
+a:hover {
+  color: #1A73E8;             /* Brighter blue for link hover */
+}
+
+button {
+  background-color: #202124;  /* Slightly lighter than body background */
+  color: #E8EAED;             /* Very light gray for button text */
+  border: 1px solid #5F6368;  /* Gray border for buttons */
+}
+
+button:hover {
+  background-color: #303134;  /* Hover background for buttons */
+  border-color: #8AB4F8;      /* Hover border color matching links */
+}
+
+/* Additional UI components styling */
+h1, h2, h3, h4, h5, h6 {
+  color: #E8EAED;             /* White for headings */
+}
+
+input {
+  background-color: #202124;  /* Dark input fields */
+  color: #E8EAED;             /* Very light gray text for inputs */
+  border: 1px solid #5F6368;  /* Gray border for focus */
+}
+
+input:focus {
+  border-color: #1A73E8;      /* Blue border for input focus, matching link hover */
+}
+
+/* Additional color accents */
+header, footer {
+  background-color: #202124;  /* Dark background for header and footer */
+  border-bottom: 1px solid #5F6368;  /* Border for header */
+  border-top: 1px solid #5F6368;     /* Border for footer */
+}
+
+.nav-link {
+  color: #E8EAED;
+}
