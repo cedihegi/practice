@@ -1,0 +1,17 @@
+name: Main CI/CD Pipeline
+
+on: push
+
+jobs:
+  backend-test:
+    uses: ./.github/workflows/test-backend.yml
+  frontend-test:
+    uses: ./.github/workflows/test-frontend.yml
+  build:
+    needs: [backend-test, frontend-test]
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/build-push.yml
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/deploy.yml

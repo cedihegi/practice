@@ -1,0 +1,22 @@
+name: Test Frontend
+
+on: workflow_call
+
+jobs:
+  test-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'  # Match this version with your project's requirement
+      - name: Install Dependencies
+        run: |
+          cd frontend
+          npm install
+      - name: Build and Test
+        run: |
+          cd frontend
+          ng build
+          ng test --watch=false --browsers=ChromeHeadless
