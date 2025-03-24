@@ -14,6 +14,7 @@ jobs:
             target
             ~/.cargo/git
             ~/.cargo/registry
+            ~/Cargo.lock
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock')}}
           restore-keys: |
             ${{ runner.os }}-cargo-

@@ -6,17 +6,16 @@ jobs:
   test-frontend:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '20'  # Match this version with your project's requirement
       - name: Install Dependencies
         run: |
           cd frontend
-          npm install
+          npm i
       - name: Build and Test
         run: |
           cd frontend
-          ng build
-          ng test --watch=false --browsers=ChromeHeadless
+          npm run test:ci
