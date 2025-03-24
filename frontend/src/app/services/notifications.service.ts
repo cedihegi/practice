@@ -20,4 +20,25 @@ export class NotificationsService {
       timestamp: new Date()
     })
   }
+  showSuccess(message: string) {
+    this.showNotification({
+      message: message,
+      kind: 'success',
+      timestamp: new Date()
+    })
+  }
+  showInfo(message: string) {
+    this.showNotification({
+      message: message,
+      kind: 'info',
+      timestamp: new Date()
+    })
+  }
+  showWarning(message: string) {
+    this.showNotification({
+      message: message,
+      kind: 'warning',
+      timestamp: new Date()
+    })
+  }
 }

@@ -4,8 +4,6 @@ import { BehaviorSubject, Observable, tap, switchMap } from 'rxjs';
 import { AuthState, UserInfo } from '../models/auth-types';
 import { NotificationsService } from './notifications.service';
 
-const LOGGED_IN_HINT = "LOGGED_IN_HINT"
-
 @Injectable({
   providedIn: 'root'
 })
@@ -27,25 +25,26 @@ export class AuthenticationService {
   login(username: string, password: string) {
     const body = [username, password];
     const response = this.httpClient.post(`${this.apiUrl}/login`, body, { withCredentials: true })
-      .pipe(
-        tap({
-          error: (_) => {
-            console.log("Error on login")
-            this.notificationService.showError("Login failed")
-          }
-        })
-      )
     return response.pipe(switchMap(_ => {
-      localStorage.setItem(LOGGED_IN_HINT, "true");
+      // on successful login, update user info
       return this.update_user_info()
     }))
   }
 
   logout() {
-    localStorage.setItem(LOGGED_IN_HINT, "false")
-    this.authState.next({
-      logged_in: false
-    })
+    this.httpClient.post(`${this.apiUrl}/logout`, {}, { withCredentials: true })
+      .subscribe({
+        next: (_) => {
+          console.log("Logout successful");
+          this.notificationService.showSuccess("Logged out successfully")
+          this.update_user_info().subscribe()
+        },
+        error: (err) => {
+          const err_msg = err.error?.message || err.message;
+          this.notificationService.showError("logout failed with error: " + err_msg);
+        }
+      });
+    return
   }
 
   update_user_info() {
@@ -55,21 +54,14 @@ export class AuthenticationService {
     return response.pipe(
       tap({
         next: (result: UserInfo) => {
-          const logged_in_hint = localStorage.getItem(LOGGED_IN_HINT);
-          if (logged_in_hint == "true") {
-            this.authState.next({
-              logged_in: true,
-              username: result.username,
-              id: result.id
+          this.authState.next({
+            logged_in: true,
+            username: result.username,
+            id: result.id
 
-            })
-          } else {
-            this.authState.next({
-              logged_in: false
-            })
-          }
+          })
         },
-        error: (_) => localStorage.setItem(LOGGED_IN_HINT, "false")
+        error: (_) => this.authState.next({ logged_in: false })
       })
     )
   }

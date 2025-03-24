@@ -31,7 +31,12 @@
 }
 
 .notification.info {
-  border-left-color: #17a2b8; /* Blue for info */
+  border-color: #17a2b8; /* Blue for info */
+}
+
+.notification.success{
+  border-color: green
+
 }
 
 /* Animation for sliding in */

@@ -1,7 +1,7 @@
 <div class="notification-container">
-    <div *ngFor="let notification of notifications" class="notification" [ngClass]="[notification.kind]">
+    <div *ngFor="let notif of notifications" class="notification" [ngClass]="[notif.kind]">
         <div class="notification-content">
-            {{ notification.message}}
+            {{ notif.message}}
         </div>
     </div>
 </div>

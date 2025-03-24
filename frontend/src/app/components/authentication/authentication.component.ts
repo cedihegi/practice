@@ -54,10 +54,13 @@ export class AuthenticationComponent implements AfterViewInit {
     }
     this.authService.login(this.username, this.password).subscribe({
       next: (_) => {
+        this.notificationService.showSuccess("Login successful");
         this.router.navigate([''])
       },
       error: (err) => {
-        console.log("login: encountered error");
+        const err_msg = err.error?.message || err.message;
+        console.log("Error on login: ", err_msg);
+        this.notificationService.showError("Login attempt failed")
         this.clear();
         this.usernameInput.nativeElement.focus();
 
