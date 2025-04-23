@@ -1,0 +1,9 @@
+<div class="card-container" [class.flipped]="flipped" (click)="select()" [style.width.px]="size * 0.68"
+    [style.height.px]="size">
+    <div class="card-face card-front">
+        <img [src]="card.getImagePath()" draggable=false />
+    </div>
+    <div class="card-face card-back">
+        <img src="images/jasskarten/backside.png" draggable=false />
+    </div>
+</div>

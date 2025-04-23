@@ -1,0 +1,9 @@
+.main-div {
+  width: 800px;
+}
+
+.card-row {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr); /* Exactly 6 cards per row */
+  gap: 10px;
+}

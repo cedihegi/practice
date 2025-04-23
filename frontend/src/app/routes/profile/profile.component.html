@@ -1,0 +1,9 @@
+<app-header></app-header>
+<div>
+    @if (authState$ | async; as authState;) {
+    @if (authState.logged_in) {
+    {{authState.username}}
+    }
+    }
+</div>
+<p>PROFILE</p>

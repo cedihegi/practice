@@ -1,0 +1,54 @@
+<app-header></app-header>
+
+<div class="flex-content">
+    <div class="main-div">
+        @if(stage == "start") {
+        <ng-container *ngTemplateOutlet="startTemplate" />
+        } @else if(stage == "show-cards") {
+        <ng-container *ngTemplateOutlet="showCardsTemplate" />
+        } @else if(stage == "pick-cards") {
+        <ng-container *ngTemplateOutlet="pickCardsTemplate" />
+        } @else {
+        <ng-container *ngTemplateOutlet="showResultTemplate" />
+        }
+    </div>
+</div>
+
+
+<ng-template #startTemplate>
+    <h2><a (click)=startGame()>Start</a></h2>
+</ng-template>
+
+<ng-template #showCardsTemplate>
+    <app-card [card]="shownCards[currentCardIndex-1]" [size]=200 [disableFlipping]=true></app-card>
+
+    @if (currentCardIndex < numberOfCardsToShow) { <button (click)=showNext()>Show Next</button>
+        } @else {
+        <button (click)=startTest()>Start Test</button>
+        }
+</ng-template>
+
+<ng-template #pickCardsTemplate>
+    <p>Flip all the Cards that were just shown to you!</p>
+    <div class="card-row">
+        @for(card of orderedDeck.cards; track card) {
+        <app-card [card]=card [size]=100 (selected)=onSelect($event)></app-card>
+        }
+    </div>
+
+    <button (click)=submit()>submit</button>
+</ng-template>
+
+<ng-template #showResultTemplate>
+    <p>wrong picks: {{wrongPicks.length}}</p>
+    <div class="card-row">
+        @for(card of wrongPicks; track card) {
+        <app-card [card]=card [size]=100 (selected)=onSelect($event)></app-card>
+        }
+    </div>
+    <p>missed picks: {{missedPicks.length}}</p>
+    @for(card of missedPicks; track card) {
+    <app-card [card]=card [size]=100 (selected)=onSelect($event)></app-card>
+    }
+    <button (click)=startGame()>Start new game</button>
+</ng-template>

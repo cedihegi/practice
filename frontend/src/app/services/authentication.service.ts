@@ -1,17 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, tap, switchMap, catchError, of } from 'rxjs';
 import { AuthState, UserInfo } from '../models/auth-types';
 import { NotificationsService } from './notifications.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
+  private apiUrl = environment.apiBaseUrl + "/users"
+
   private authState = new BehaviorSubject<AuthState>({ logged_in: false });
   authState$ = this.authState.asObservable();
 
-  private apiUrl = "http://localhost:8080/users"
   constructor(
     private httpClient: HttpClient,
     private notificationService: NotificationsService
@@ -52,16 +54,18 @@ export class AuthenticationService {
       `${this.apiUrl}/current-user`, { withCredentials: true }
     );
     return response.pipe(
-      tap({
-        next: (result: UserInfo) => {
-          this.authState.next({
-            logged_in: true,
-            username: result.username,
-            id: result.id
+      tap((result: UserInfo) => {
+        this.authState.next({
+          logged_in: true,
+          username: result.username,
+          id: result.id
 
-          })
-        },
-        error: (_) => this.authState.next({ logged_in: false })
+        })
+      }),
+      catchError(_ => {
+        this.authState.next({ logged_in: false });
+        return of(null)
+
       })
     )
   }

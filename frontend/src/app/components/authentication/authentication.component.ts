@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -9,7 +8,7 @@ import { NotificationsService } from '../../services/notifications.service';
 @Component({
   selector: 'app-authentication',
   standalone: true,
-  imports: [NgIf, FormsModule],
+  imports: [FormsModule],
   templateUrl: './authentication.component.html',
   styleUrl: './authentication.component.scss'
 })
@@ -74,10 +73,14 @@ export class AuthenticationComponent implements AfterViewInit {
   }
 
   getAbout(): void {
-    this.apiService.getAbout(42).subscribe((res) => {
-      this.about_info = JSON.stringify(res);
-      console.log(res)
-    })
+    try {
+      this.apiService.getAbout(42).subscribe((res) => {
+        this.about_info = JSON.stringify(res);
+        console.log(res)
+      })
+    } catch (error) {
+      console.log("get about: received error: ", error);
+    }
 
   }
 }

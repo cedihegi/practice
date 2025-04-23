@@ -18,6 +18,7 @@ input, label, button {
 
 a {
   color: #8AB4F8;             /* Soft blue for links */
+  text-decoration: none;
 }
 
 a:hover {
@@ -59,4 +60,11 @@ header, footer {
 
 .nav-link {
   color: #E8EAED;
+}
+
+// content in rows, centered
+.flex-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
